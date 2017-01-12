@@ -29,17 +29,21 @@ ground = RectangleAsset(SCREEN_WIDTH-8, 50, greenline, lgreen)
 ground1 = Sprite(ground, (4, SCREEN_HEIGHT-54))
 
 skip = PolygonAsset([(0, 20), (0, 0), (8, -15), (16, 0), (16, 20)], thinblueline, blue)
-skipper = Sprite(skip, (50, 50))
+skipper = Sprite(skip, (100, 524))
 
-class skipper(Sprite):
-    def __init__(self, position):
-        super().__init__(position)
-        skip = PolygonAsset([(0, 20), (0, 0), (8, -15), (16, 0), (16, 20)], thinblueline, blue)
-        skipper = Sprite(skip, (0,0))
-        self.vx = -1
-        self.vy = 0
-        self.vr = 0
+skipper.dir = 1
+skipper.go = True
+
+def reverse(b):
+    b.dir *= -1
+    
+def step():
+    if ball.go:
+        ball.x += ball.dir
+        if ball.x + ball.width > SCREEN_WIDTH or ball.x < 0:
+            ball.x -= ball.dir
+            reverse(ball)
  
 
 myapp = App(SCREEN_WIDTH, SCREEN_HEIGHT)
-myapp.run()
+myapp.run(step)
